@@ -47,7 +47,17 @@ class _MapaListPageState extends State<MapaListPage> {
                         Icons.map,
                         color: Theme.of(context).primaryColor,
                       ),
-                      title: Text('Nombre: ' + snapshot.data[i].nombre),
+                      title: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text('Nombre: ' + snapshot.data[i].nombre),
+                          ),
+                          RaisedButton(
+                            child: Text('Rutina'),
+                            onPressed: () {},
+                          )
+                        ],
+                      ),
                       subtitle: Text('Lat: ' + snapshot.data[i].latitud + ' Lng: ' + snapshot.data[i].longitud),
                       trailing: Icon(
                         Icons.keyboard_arrow_right,
