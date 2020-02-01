@@ -15,7 +15,7 @@ class RegisterPage extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.blue, Colors.white])),
+                  colors: [Color.fromRGBO(27, 109, 193, 1), Color.fromRGBO(27, 109, 193, 1)])),
         ),
         SingleChildScrollView(
           child: Container(
@@ -85,7 +85,7 @@ class RegisterPage extends StatelessWidget {
                       },
                     ),
                     CupertinoButton(
-                      child: Text('Ya tengo cuenta'),
+                      child: Text('Ya tengo cuenta', style: TextStyle(color: Colors.white),),
                       onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
                     )
                   ],

@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.blue, Colors.white])),
+                  colors: [Color.fromRGBO(27, 109, 193, 1), Color.fromRGBO(27, 109, 193, 1)])),
         ),
         SingleChildScrollView(
           child: Container(
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       CupertinoButton(
-                        child: Text('Crear una cuenta'),
+                        child: Text('Crear una cuenta', style: TextStyle(color: Colors.white),),
                         onPressed: () => Navigator.pushReplacementNamed(context, 'register'),
                       )
                     ],

@@ -15,7 +15,7 @@ class DeviceRegisterPage extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.blue, Colors.white])),
+                  colors: [Color.fromRGBO(27, 109, 193, 1), Color.fromRGBO(27, 109, 193, 1)])),
         ),
         SingleChildScrollView(
           child: Container(
@@ -79,7 +79,7 @@ class DeviceRegisterPage extends StatelessWidget {
                         },
                       ),
                       CupertinoButton(
-                        child: Text('Cancelar registro'),
+                        child: Text('Cancelar registro', style: TextStyle(color: Colors.white),),
                         onPressed: () => Navigator.pop(context)
                       )
                     ],
