@@ -17,6 +17,14 @@ class _MapaListPageState extends State<MapaListPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Lista de dispositivos'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.pushNamed(context, 'device_register');
+              },
+            )
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.refresh),
@@ -52,9 +60,15 @@ class _MapaListPageState extends State<MapaListPage> {
                           Expanded(
                             child: Text('Nombre: ' + snapshot.data[i].nombre),
                           ),
+                          IconButton(
+                            icon: Icon(Icons.delete_forever),
+                            onPressed: (){},
+                          ),
                           RaisedButton(
-                            child: Text('Rutina'),
-                            onPressed: () {},
+                            child: Text('Rutinas'),
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'routines_list');
+                            },
                           )
                         ],
                       ),

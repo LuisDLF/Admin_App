@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class RegisterPage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -26,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           child: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[this._loginForm()],
+              children: <Widget>[this._registerForm(context)],
             ),
           ),
         )
@@ -34,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _loginForm() {
+  Widget _registerForm(BuildContext context) {
     return SafeArea(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 40),
@@ -51,11 +46,10 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 15.0,
               ),
-              Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 30),),
+              Text('Registarme', style: TextStyle(color: Colors.white, fontSize: 30),),
               SizedBox(
                 height: 15.0,
               ),
-
               TextFormField(
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
@@ -69,26 +63,33 @@ class _HomePageState extends State<HomePage> {
                 ),
                 obscureText: true,
               ),
+              TextFormField(
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: 'Validar contraseña',
+                ),
+                obscureText: true,
+              ),
               SizedBox(
                 height: 15.0,
               ),
               Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        color: Colors.white,
-                        child: Text('Entrar'),
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, 'dispositivo_list');
-                        },
-                      ),
-                      CupertinoButton(
-                        child: Text('Crear una cuenta'),
-                        onPressed: () => Navigator.pushReplacementNamed(context, 'register'),
-                      )
-                    ],
-                  )
+                width: double.infinity,
+                child: Column(
+                  children: <Widget>[
+                    RaisedButton(
+                      color: Colors.white,
+                      child: Text('Registrarme'),
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'dispositivo_list');
+                      },
+                    ),
+                    CupertinoButton(
+                      child: Text('Ya tengo cuenta'),
+                      onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
+                    )
+                  ],
+                )
               ),
             ],
           ),

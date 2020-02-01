@@ -1,7 +1,11 @@
 
+import 'package:admin_app/src/pages/device_register_page.dart';
 import 'package:admin_app/src/pages/home_page.dart';
 import 'package:admin_app/src/pages/mapa_list_page.dart';
 import 'package:admin_app/src/pages/maps_page.dart';
+import 'package:admin_app/src/pages/register_page.dart';
+import 'package:admin_app/src/pages/routine_device_register_page.dart';
+import 'package:admin_app/src/pages/routines_device_list_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MainApp());
@@ -14,7 +18,11 @@ class MainApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (BuildContext ctx) => HomePage(),
+        'register': (BuildContext ctx) => RegisterPage(),
+        'device_register': (BuildContext ctx) => DeviceRegisterPage(),
+        'routine_register': (BuildContext ctx) => RoutineDeviceRegisterPage(),
         'dispositivo_list': (BuildContext ctx) => MapaListPage(),
+        'routines_list': (BuildContext ctx) => RoutinesDeviceListPage(),
         'maps': (BuildContext ctx) => MapsPage(),
       },
     );
