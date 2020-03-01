@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:latlong/latlong.dart';
 
 class DispositivoModel {
-  String idDispositivo;
+  int idDispositivo;
+  int idAdmin;
   String nombre;
   String contrasena;
   String latitud;
@@ -10,6 +11,7 @@ class DispositivoModel {
 
   DispositivoModel({
     this.idDispositivo,
+    this.idAdmin,
     this.nombre,
     this.contrasena,
     this.latitud,
@@ -17,7 +19,8 @@ class DispositivoModel {
   });
 
   DispositivoModel copyWith({
-    String idDispositivo,
+    int idDispositivo,
+    int idAdmin,
     String nombre,
     String contrasena,
     String latitud,
@@ -25,6 +28,7 @@ class DispositivoModel {
   }) =>
       DispositivoModel(
         idDispositivo: idDispositivo ?? this.idDispositivo,
+        idAdmin: idAdmin ?? this.idAdmin,
         nombre: nombre ?? this.nombre,
         contrasena: contrasena ?? this.contrasena,
         latitud: latitud ?? this.latitud,
@@ -36,7 +40,10 @@ class DispositivoModel {
   String toJson() => json.encode(toMap());
 
   factory DispositivoModel.fromMap(Map<String, dynamic> json) => DispositivoModel(
-        idDispositivo: json["Id_Dispositivo"] == null ? null : json["Id_Dispositivo"],
+        idDispositivo: json["Id_Dispositivo"] == null
+            ? null
+            : (json["Id_Dispositivo"] is String) ? int.parse(json["Id_Dispositivo"]) : null,
+        idAdmin: json["Id_Admin"] == null ? null : (json["Id_Admin"] is String) ? int.parse(json["Id_Admin"]) : null,
         nombre: json["Nombre"] == null ? null : json["Nombre"],
         contrasena: json["Contrasena"] == null ? null : json["Contrasena"],
         latitud: json["Latitud"] == null ? null : json["Latitud"],

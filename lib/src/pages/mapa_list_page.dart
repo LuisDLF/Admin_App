@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:admin_app/src/blocs/dispositivo_bloc.dart';
 import 'package:admin_app/src/models/auth_model.dart';
@@ -12,13 +11,13 @@ class MapaListPage extends StatefulWidget {
 }
 
 class _MapaListPageState extends State<MapaListPage> {
-  bool isClose = false;
   final dispositivosBloc = DispositivoBloc();
+  Timer timer;
   AuthModel model;
 
   @override
   void dispose() {
-    this.isClose = true;
+    this.timer.cancel();
   }
 
   @override
@@ -26,10 +25,12 @@ class _MapaListPageState extends State<MapaListPage> {
     this.model = ModalRoute.of(context).settings.arguments;
     this.dispositivosBloc.getAllDispositivos(model.idAdmin);
 
-    Timer.periodic(Duration(seconds: 10), (t) {
-      print('Timer');
-      this.dispositivosBloc.getAllDispositivos(model.idAdmin);
-    });
+    if(this.timer == null) {
+      this.timer = Timer.periodic(Duration(seconds: 10), (t) {
+        print('Timer: ' + DateTime.now().toString());
+        this.dispositivosBloc.getAllDispositivos(model.idAdmin);
+      });
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -38,7 +39,7 @@ class _MapaListPageState extends State<MapaListPage> {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                Navigator.pushNamed(context, 'device_register');
+                Navigator.pushNamed(context, 'device_register', arguments: this.model);
               },
             )
           ],
@@ -82,9 +83,9 @@ class _MapaListPageState extends State<MapaListPage> {
                             onPressed: () {},
                           ),
                           RaisedButton(
-                            child: Text('Rutinas'),
+                            child: Text('Tareas'),
                             onPressed: () {
-                              Navigator.pushNamed(context, 'routines_list');
+                              Navigator.pushNamed(context, 'routines_list', arguments: snapshot.data[i]);
                             },
                           )
                         ],

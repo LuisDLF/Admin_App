@@ -8,6 +8,16 @@ class DispositivosProvider {
 
   DispositivosProvider._();
 
+  Future<bool> register(DispositivoModel model) async {
+    if (model.nombre == null || model.contrasena == null) {
+      return false;
+    }
+    final dataRaw = await http.post('http://sotepsa.com/services/Registro_Dispositivo.php',
+        body: {'Nombre': model.nombre, 'Contrasena': model.contrasena, 'Id_Admin': model.idAdmin.toString()});
+    final data = json.decode(dataRaw.body);
+    return (data == 1) ? true : false;
+  }
+
   Future<List<DispositivoModel>> getAllDispositivos(int id) async {
     final dataRaw = await http.get('http://sotepsa.com/services/Gps_read.php?Id_Admin=' + id.toString());
     final data = json.decode(dataRaw.body);
