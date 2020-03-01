@@ -8,13 +8,13 @@ class DispositivosProvider {
 
   DispositivosProvider._();
 
-  Future<List<DispositivoModel>> getAllDispositivos() async {
-    final dataRaw = await http.get('https://sweetnightmare.xyz/services/Gps_read.php');
+  Future<List<DispositivoModel>> getAllDispositivos(int id) async {
+    final dataRaw = await http.get('http://sotepsa.com/services/Gps_read.php?Id_Admin=' + id.toString());
     final data = json.decode(dataRaw.body);
     List<DispositivoModel> list = [];
 
-    for(var item in data) {
-     list.add(DispositivoModel.fromMap(item));
+    for (var item in data) {
+      list.add(DispositivoModel.fromMap(item));
     }
 
     return list;

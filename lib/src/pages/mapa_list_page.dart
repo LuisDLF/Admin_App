@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:admin_app/src/blocs/dispositivo_bloc.dart';
+import 'package:admin_app/src/models/auth_model.dart';
 import 'package:admin_app/src/models/dispositivo_model.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +12,24 @@ class MapaListPage extends StatefulWidget {
 }
 
 class _MapaListPageState extends State<MapaListPage> {
+  bool isClose = false;
   final dispositivosBloc = DispositivoBloc();
+  AuthModel model;
+
+  @override
+  void dispose() {
+    this.isClose = true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    this.dispositivosBloc.getAllDispositivos();
+    this.model = ModalRoute.of(context).settings.arguments;
+    this.dispositivosBloc.getAllDispositivos(model.idAdmin);
+
+    Timer.periodic(Duration(seconds: 10), (t) {
+      print('Timer');
+      this.dispositivosBloc.getAllDispositivos(model.idAdmin);
+    });
 
     return Scaffold(
         appBar: AppBar(
@@ -29,7 +46,7 @@ class _MapaListPageState extends State<MapaListPage> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.refresh),
           onPressed: () {
-            this.dispositivosBloc.getAllDispositivos();
+            this.dispositivosBloc.getAllDispositivos(model.idAdmin);
             setState(() {});
           },
         ),
@@ -62,7 +79,7 @@ class _MapaListPageState extends State<MapaListPage> {
                           ),
                           IconButton(
                             icon: Icon(Icons.delete_forever),
-                            onPressed: (){},
+                            onPressed: () {},
                           ),
                           RaisedButton(
                             child: Text('Rutinas'),

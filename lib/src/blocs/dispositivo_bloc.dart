@@ -10,16 +10,14 @@ class DispositivoBloc {
     return _dispositivoBloc;
   }
 
-  DispositivoBloc._() {
-    this.getAllDispositivos();
-  }
+  DispositivoBloc._();
 
   final _streamController = StreamController<List<DispositivoModel>>.broadcast();
 
   Stream<List<DispositivoModel>> get dispositivosStream => this._streamController.stream;
 
-  getAllDispositivos() async {
-    this._streamController.sink.add(await DispositivosProvider.service.getAllDispositivos());
+  getAllDispositivos(int id) async {
+    this._streamController.sink.add(await DispositivosProvider.service.getAllDispositivos(id));
   }
 
   dispose() {
