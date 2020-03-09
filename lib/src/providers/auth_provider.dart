@@ -9,6 +9,14 @@ class AuthProvider {
 
   AuthProvider._();
 
+  Future<bool> register(String name, String email, String password) async {
+    final dataRaw = await http.post('http://sotepsa.com/services/Register_Admin.php',
+        body: {'Nombre': name, 'Correo': email, 'Contrasena': password});
+    final data = json.decode(dataRaw.body);
+    print(data);
+    return (data == 1) ? true : false;
+  }
+
   Future<AuthModel> login(AuthModel model) async {
     if (model.nombre == null || model.contrasena == null) {
       return null;

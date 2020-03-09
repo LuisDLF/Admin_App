@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:admin_app/src/providers/dispositivo_provider.dart';
+import 'package:admin_app/src/models/dispositivo_model.dart';
 import 'package:admin_app/src/blocs/dispositivo_bloc.dart';
 import 'package:admin_app/src/models/auth_model.dart';
-import 'package:admin_app/src/models/dispositivo_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
 class MapaListPage extends StatefulWidget {
@@ -20,12 +22,35 @@ class _MapaListPageState extends State<MapaListPage> {
     this.timer.cancel();
   }
 
+  delete(int id) async {
+    if (await DispositivosProvider.service.delete(id)) {
+      Fluttertoast.showToast(
+          msg: "Se a eliminado correctamente",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Error vuelva a intentar",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    this.dispositivosBloc.getAllDispositivos(model.idAdmin);
+  }
+
   @override
   Widget build(BuildContext context) {
     this.model = ModalRoute.of(context).settings.arguments;
     this.dispositivosBloc.getAllDispositivos(model.idAdmin);
 
-    if(this.timer == null) {
+    if (this.timer == null) {
       this.timer = Timer.periodic(Duration(seconds: 10), (t) {
         print('Timer: ' + DateTime.now().toString());
         this.dispositivosBloc.getAllDispositivos(model.idAdmin);
@@ -80,7 +105,7 @@ class _MapaListPageState extends State<MapaListPage> {
                           ),
                           IconButton(
                             icon: Icon(Icons.delete_forever),
-                            onPressed: () {},
+                            onPressed: () => this.delete(snapshot.data[i].idDispositivo),
                           ),
                           RaisedButton(
                             child: Text('Tareas'),

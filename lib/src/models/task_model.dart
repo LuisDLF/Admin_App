@@ -51,7 +51,7 @@ class TaskModel {
   String toJson() => json.encode(toMap());
 
   factory TaskModel.fromMap(Map<String, dynamic> json) => TaskModel(
-        idTarea: json["Id_Tarea"] == null ? null : json["Id_Tarea"],
+        idTarea: json["Id_tarea"] == null ? null : (json["Id_tarea"] is String) ? int.parse(json["Id_tarea"]) : null,
         nombre: json["Nombre_tarea"] == null ? null : json["Nombre_tarea"],
         telefono: json["Tel"] == null ? null : json["Tel"],
         rango: json["rango"] == null ? null : (json["rango"] is String) ? int.parse(json["rango"]) : null,

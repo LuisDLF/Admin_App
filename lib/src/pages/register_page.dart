@@ -1,8 +1,14 @@
+import 'package:admin_app/src/providers/auth_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
+
+  String name;
+  String email;
+  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +35,30 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
+  register(BuildContext context) async {
+    if ((this.name != null && this.email != null && this.password != null) &&
+        await AuthProvider.service.register(this.name, this.email, this.password)) {
+      Fluttertoast.showToast(
+          msg: "Se a registrado correctamente",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      Navigator.of(context).pushReplacementNamed('home');
+    } else {
+      Fluttertoast.showToast(
+          msg: "La inforamcio es incorrecta por favor vuelva a intetar",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
   Widget _registerForm(BuildContext context) {
     return SafeArea(
       child: Container(
@@ -46,27 +76,32 @@ class RegisterPage extends StatelessWidget {
               SizedBox(
                 height: 15.0,
               ),
-              Text('Registarme', style: TextStyle(color: Colors.white, fontSize: 30),),
+              Text(
+                'Registarme',
+                style: TextStyle(color: Colors.white, fontSize: 30),
+              ),
               SizedBox(
                 height: 15.0,
               ),
               TextFormField(
+                onChanged: (val) => this.name = val,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  labelText: 'Cuenta',
+                  labelText: 'Nombre',
                 ),
               ),
               TextFormField(
+                onChanged: (val) => this.email = val,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                ),
+              ),
+              TextFormField(
+                onChanged: (val) => this.password = val,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   labelText: 'Contraseña',
-                ),
-                obscureText: true,
-              ),
-              TextFormField(
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  labelText: 'Validar contraseña',
                 ),
                 obscureText: true,
               ),
@@ -74,23 +109,23 @@ class RegisterPage extends StatelessWidget {
                 height: 15.0,
               ),
               Container(
-                width: double.infinity,
-                child: Column(
-                  children: <Widget>[
-                    RaisedButton(
-                      color: Colors.white,
-                      child: Text('Registrarme'),
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'dispositivo_list');
-                      },
-                    ),
-                    CupertinoButton(
-                      child: Text('Ya tengo cuenta', style: TextStyle(color: Colors.white),),
-                      onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
-                    )
-                  ],
-                )
-              ),
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      RaisedButton(
+                        color: Colors.white,
+                        child: Text('Registrarme'),
+                        onPressed: () => this.register(context),
+                      ),
+                      CupertinoButton(
+                        child: Text(
+                          'Ya tengo cuenta',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
+                      )
+                    ],
+                  )),
             ],
           ),
         ),

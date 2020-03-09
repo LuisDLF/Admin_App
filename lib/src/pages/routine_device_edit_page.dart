@@ -9,15 +9,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-class RoutineDeviceRegisterPage extends StatefulWidget {
+class RoutineDeviceEditPage extends StatefulWidget {
   @override
-  _RoutineDeviceRegisterPageState createState() => _RoutineDeviceRegisterPageState();
+  _RoutineDeviceEditPageState createState() => _RoutineDeviceEditPageState();
 }
 
-class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
+class _RoutineDeviceEditPageState extends State<RoutineDeviceEditPage> {
   Position positionSelect;
   final _mapController = MapController();
-  DispositivoModel model;
+  TaskModel model;
   String tipoMapa = 'streets';
 
   String name;
@@ -48,13 +48,22 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
     final size = MediaQuery.of(context).size;
     this.model = ModalRoute.of(context).settings.arguments;
 
-    if (this.positionSelect == null) {
-      this.getUserLocation();
-    }
+//    if (this.positionSelect == null) {
+//      this.getUserLocation();
+//    }
+
+    this.positionSelect = Position(latitude: this.model.lat, longitude: this.model.lon);
+
+    this.horaEntrada = DateTime.parse(this.model.horaEntrada);
+    this.horaSalida = DateTime.parse(this.model.horaSalida);
+
+    this.name = model.nombre;
+    this.telefono = model.telefono;
+    this.rango = model.rango.toString();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registrar nueva rutina'),
+        title: Text('Editar rutina'),
       ),
       body: SafeArea(
         child: Container(
@@ -72,8 +81,7 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
     );
   }
 
-  register() async {
-    TaskModel model = TaskModel();
+  actualizar() async {
     model.nombre = this.name;
     model.telefono = this.telefono;
     model.rango = int.parse(this.rango);
@@ -81,11 +89,10 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
     model.lon = this.positionSelect.longitude;
     model.horaEntrada = this.horaEntrada.toString();
     model.horaSalida = this.horaSalida.toString();
-    model.idDispositivo = this.model.idDispositivo;
-    final resp = await TaskProvider.service.register(model);
+    final resp = await TaskProvider.service.update(model);
     if (resp) {
       Fluttertoast.showToast(
-          msg: "La tarea se registro correctamente.",
+          msg: "La tarea se actualizo correctamente.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIos: 1,
@@ -129,6 +136,7 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+            initialValue: this.model.telefono,
             onChanged: (val) => this.telefono = val,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -136,6 +144,7 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
             ),
           ),
           TextFormField(
+            initialValue: this.model.nombre,
             onChanged: (val) => this.name = val,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -143,6 +152,7 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
             ),
           ),
           TextFormField(
+            initialValue: this.model.rango.toString(),
             onChanged: (val) => this.rango = val,
             style: TextStyle(color: Colors.black),
             keyboardType: TextInputType.number,
@@ -230,13 +240,13 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
                 children: <Widget>[
                   RaisedButton(
                     color: Colors.white,
-                    child: Text('Registrar'),
+                    child: Text('Actualizar'),
                     onPressed: () {
-                      this.register();
+                      this.actualizar();
                       Navigator.pop(context);
                     },
                   ),
-                  CupertinoButton(child: Text('Cancelar registro'), onPressed: () => Navigator.pop(context))
+                  CupertinoButton(child: Text('Cancelar'), onPressed: () => Navigator.pop(context))
                 ],
               )),
         ],

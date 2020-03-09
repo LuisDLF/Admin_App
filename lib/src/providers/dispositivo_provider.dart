@@ -29,4 +29,10 @@ class DispositivosProvider {
 
     return list;
   }
+
+  Future<bool> delete(int id) async {
+    final dataRaw = await http.post('http://sotepsa.com/services/Delete_Dispositivo.php', body: {'Id_Dispositivo': id.toString()});
+    final data = json.decode(dataRaw.body);
+    return (data == 1) ? true : false;
+  }
 }
