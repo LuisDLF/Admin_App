@@ -19,6 +19,7 @@ class TaskProvider {
       'hora_salida': model.horaSalida,
       'Lat': model.lat.toString(),
       'Lon': model.lon.toString(),
+      'Tel': model.telefono,
       'Id_Dispositivo': model.idDispositivo.toString(),
     });
     final data = json.decode(dataRaw.body);

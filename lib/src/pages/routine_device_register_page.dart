@@ -21,6 +21,7 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
   String tipoMapa = 'streets';
 
   String name;
+  String telefono;
   String rango;
   DateTime horaEntrada;
   DateTime horaSalida;
@@ -124,6 +125,13 @@ class _RoutineDeviceRegisterPageState extends State<RoutineDeviceRegisterPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          TextFormField(
+            onChanged: (val) => this.telefono = val,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+              labelText: 'Nombre de la rutina',
+            ),
+          ),
           TextFormField(
             onChanged: (val) => this.name = val,
             style: TextStyle(color: Colors.black),

@@ -3,6 +3,7 @@ import 'dart:convert';
 class TaskModel {
   int idTarea;
   String nombre;
+  String telefono;
   int rango;
   String horaEntrada;
   String horaSalida;
@@ -13,6 +14,7 @@ class TaskModel {
   TaskModel({
     this.idTarea,
     this.nombre,
+    this.telefono,
     this.rango,
     this.horaEntrada,
     this.horaSalida,
@@ -24,6 +26,7 @@ class TaskModel {
   TaskModel copyWith({
     int idTarea,
     String nombre,
+    String telefono,
     int rango,
     String horaEntrada,
     String horaSalida,
@@ -34,6 +37,7 @@ class TaskModel {
       TaskModel(
         idTarea: idTarea ?? this.idTarea,
         nombre: nombre ?? this.nombre,
+        telefono: telefono ?? this.telefono,
         rango: rango ?? this.rango,
         horaEntrada: horaEntrada ?? this.horaEntrada,
         horaSalida: horaSalida ?? this.horaSalida,
@@ -49,6 +53,7 @@ class TaskModel {
   factory TaskModel.fromMap(Map<String, dynamic> json) => TaskModel(
         idTarea: json["Id_Tarea"] == null ? null : json["Id_Tarea"],
         nombre: json["Nombre_tarea"] == null ? null : json["Nombre_tarea"],
+        telefono: json["Tel"] == null ? null : json["Tel"],
         rango: json["rango"] == null ? null : (json["rango"] is String) ? int.parse(json["rango"]) : null,
         horaEntrada: json["hora_entrada"] == null ? null : json["hora_entrada"],
         horaSalida: json["hora_salida"] == null ? null : json["hora_salida"],
@@ -60,6 +65,7 @@ class TaskModel {
   Map<String, dynamic> toMap() => {
         "Id_Tarea": idTarea == null ? null : idTarea,
         "Nombre": nombre == null ? null : nombre,
+        "Tel": telefono == null ? null : telefono,
         "rango": rango == null ? null : rango,
         "hora_entrada": horaEntrada == null ? null : horaEntrada,
         "hora_salida": horaSalida == null ? null : horaSalida,
